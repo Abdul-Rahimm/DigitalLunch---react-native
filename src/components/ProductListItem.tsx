@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 15,
     borderRadius: 20,
+    flex: 1, //share space equally with siblings
+    maxWidth: "50%", //for odd items
   },
   title: {
     fontSize: 20,
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: Colors.light.tint,
+    fontSize: 15,
     fontWeight: "bold",
   },
 });
