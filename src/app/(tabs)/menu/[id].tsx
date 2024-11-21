@@ -2,24 +2,30 @@ import Button from "@/components/Buttom";
 import ProductListItem, {
   defaultPizzaImage,
 } from "@/components/ProductListItem";
-import { PizzaSize } from "@/types";
+import { CartItem, PizzaSize } from "@/types";
 import products from "@assets/data/products";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Image, Text, View, StyleSheet, Pressable } from "react-native";
+import { useCart } from "@/providers/CartProvider"; //this gives you access to the addItem function
 
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id } = useLocalSearchParams();
+  const { addItem } = useCart();
+
   const index = Number(id);
   const product = products[index - 1];
+  const router = useRouter();
 
-  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>("M");
 
   const addToCart = () => {
     if (!product) return;
-    console.warn("Add to cart");
+
+    addItem(product, selectedSize);
+    router.push("/cart");
   };
 
   return (
