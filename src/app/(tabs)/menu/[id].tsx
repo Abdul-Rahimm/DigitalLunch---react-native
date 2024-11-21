@@ -1,4 +1,4 @@
-import Button from "@/components/Buttom";
+import Button from "@/components/Button";
 import ProductListItem, {
   defaultPizzaImage,
 } from "@/components/ProductListItem";
