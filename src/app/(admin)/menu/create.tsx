@@ -4,13 +4,16 @@ import Button from "@/components/Button";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import Colors from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 const CreateProductScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [errors, setErrors] = useState("");
   const [image, setImage] = useState<string | null>(null);
+
+  const { id } = useLocalSearchParams();
+  const isUpdating = !!id; //will be true when we are updating NOT CREATING
 
   const onCreate = () => {
     if (!validateInput()) {
@@ -61,7 +64,9 @@ const CreateProductScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ title: "Create Product" }} />
+      <Stack.Screen
+        options={{ title: isUpdating ? "Update Product" : "Create Product" }}
+      />
 
       <Image
         source={{ uri: image || defaultPizzaImage }}

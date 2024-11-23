@@ -34,7 +34,6 @@ const ProductDetailsScreen = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen
-        name="[id]"
         options={{
           title: "Menu",
           headerRight: () => (
