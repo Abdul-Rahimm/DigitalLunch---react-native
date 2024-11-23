@@ -36,43 +36,8 @@ const ProductDetailsScreen = () => {
         style={styles.image}
       />
 
-      <Text
-        style={{
-          textAlign: "center",
-          paddingBottom: 10,
-          fontSize: 14,
-        }}
-      >
-        Select Size
-      </Text>
-      <View style={styles.sizes}>
-        {sizes.map((size, index) => (
-          <Pressable
-            onPress={() => setSelectedSize(size)}
-            key={index}
-            style={[
-              styles.size,
-              {
-                backgroundColor: size === selectedSize ? "gainsboro" : "white",
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.sizeText,
-                {
-                  color: size === selectedSize ? "black" : "gray",
-                },
-              ]}
-            >
-              {size}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
-
+      <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>PKR {product.price}</Text>
-      <Button onPress={addToCart} text="Add to cart" />
     </View>
   );
 };
@@ -87,6 +52,7 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 1,
     alignSelf: "center",
+    marginTop: 10,
   },
   subtitle: {
     marginVertical: 10,
@@ -95,25 +61,13 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: "auto",
     textAlign: "center",
   },
-
-  sizes: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  size: {
-    width: 50,
-    aspectRatio: 1,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  sizeText: {
-    fontSize: 20,
-    fontWeight: "500",
-    color: "black",
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
 
