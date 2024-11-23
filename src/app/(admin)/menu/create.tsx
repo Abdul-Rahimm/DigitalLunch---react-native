@@ -25,6 +25,23 @@ const CreateProductScreen = () => {
     resetFields();
   };
 
+  const onUpdate = () => {
+    if (!validateInput()) return;
+
+    console.warn("updating Product", name);
+
+    resetFields();
+  };
+
+  //whether to create or update
+  const onSubmit = () => {
+    if (isUpdating) {
+      onUpdate();
+    } else {
+      onCreate();
+    }
+  };
+
   const resetFields = () => {
     setName("");
     setPrice("");
@@ -94,7 +111,7 @@ const CreateProductScreen = () => {
       />
 
       <Text style={{ color: "red" }}>{errors}</Text>
-      <Button text="Create" onPress={onCreate} />
+      <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />
     </View>
   );
 };
