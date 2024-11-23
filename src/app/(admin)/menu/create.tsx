@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import Button from "@/components/Button";
 import { defaultPizzaImage } from "@/components/ProductListItem";
@@ -31,6 +31,25 @@ const CreateProductScreen = () => {
     console.warn("updating Product", name);
 
     resetFields();
+  };
+
+  //actually hits the Delete API call
+  const onDelete = () => {
+    console.log("Deleting");
+  };
+
+  //confirm before hitting the APi call
+  const confirmDelete = () => {
+    Alert.alert("Confirm", "Are you sure to Delete?", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "Delete",
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
   };
 
   //whether to create or update
@@ -112,6 +131,11 @@ const CreateProductScreen = () => {
 
       <Text style={{ color: "red" }}>{errors}</Text>
       <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />
+      {isUpdating && (
+        <Text onPress={confirmDelete} style={styles.textButton}>
+          Delete
+        </Text>
+      )}
     </View>
   );
 };
