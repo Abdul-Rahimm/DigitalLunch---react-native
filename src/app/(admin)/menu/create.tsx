@@ -9,6 +9,9 @@ const CreateProductScreen = () => {
   const [image, setImage] = useState<string | null>(null);
 
   const onCreate = () => {
+    if (!validateInput()) {
+      return;
+    }
     console.warn("Creating Product", name, price);
 
     //after successfully saving values to the DB. reset feilds
@@ -18,6 +21,24 @@ const CreateProductScreen = () => {
   const resetFields = () => {
     setName("");
     setPrice("");
+  };
+
+  const validateInput = () => {
+    setErrors("");
+    if (!name) {
+      setErrors("Name is required");
+      return false;
+    }
+    if (!price) {
+      setErrors("Price is required");
+      return false;
+    }
+    if (isNaN(parseFloat(price))) {
+      setErrors("Price is not a number");
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -39,6 +60,7 @@ const CreateProductScreen = () => {
         style={styles.input}
       />
 
+      <Text style={{ color: "red" }}>{errors}</Text>
       <Button text="Create" onPress={onCreate} />
     </View>
   );
