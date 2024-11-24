@@ -16,7 +16,7 @@ export default function TabTwoScreen() {
     </View>
   );
 }
-
+//akhmas is working
 const styles = StyleSheet.create({
   container: {
     flex: 1,
