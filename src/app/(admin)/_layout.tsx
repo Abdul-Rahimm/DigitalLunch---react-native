@@ -50,15 +50,8 @@ export default function TabLayout() {
         name="orders"
         options={{
           title: "Orders",
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
-        }}
-      />
-
-      <Tabs.Screen
-        name="learning"
-        options={{
-          title: "Learn",
-          tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
         }}
       />
     </Tabs>
