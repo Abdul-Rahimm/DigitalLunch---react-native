@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { Text } from "react-native";
 import { useProductList } from "@/api/products";
+import Button from "@/components/Button";
 
 // keep structure and style seperate
 
@@ -25,6 +26,7 @@ export default function MenuScreen() {
         contentContainerStyle={{ gap: 10, padding: 10 }}
         columnWrapperStyle={{ gap: 10 }}
       />
+      <Button text="Sign Out" onPress={() => supabase.auth.signOut()} />
     </View>
   );
 }

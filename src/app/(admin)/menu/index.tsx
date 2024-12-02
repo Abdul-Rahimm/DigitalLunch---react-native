@@ -7,6 +7,8 @@ import {
 } from "react-native";
 import ProductListItem from "@components/ProductListItem";
 import { useProductList } from "@/api/products";
+import Button from "@/components/Button";
+import { supabase } from "@/lib/supabase";
 
 // keep structure and style seperate
 
@@ -22,9 +24,14 @@ export default function MenuScreen() {
         data={products}
         renderItem={({ item }) => <ProductListItem product={item} />}
         numColumns={2}
-        contentContainerStyle={{ gap: 10, padding: 10 }}
+        contentContainerStyle={{
+          gap: 10,
+          padding: 10,
+          backgroundColor: "red",
+        }}
         columnWrapperStyle={{ gap: 10 }}
       />
+      <Button text="Sign Out" onPress={() => supabase.auth.signOut()} />
     </View>
   );
 }
