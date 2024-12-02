@@ -21,7 +21,7 @@ export default function ProductListItem({ product }: ProductListItemProps) {
         />
 
         <Text style={styles.title}>{product.name}</Text>
-        <Text style={styles.price}>{product.price}</Text>
+        <Text style={styles.price}>PKR {product.price}</Text>
       </Pressable>
     </Link>
   );
