@@ -26,10 +26,13 @@ export default function AuthProvider({ children }: PropsWithChildren) {
     const fetchSession = async () => {
       const { data, error } = await supabase.auth.getSession();
       setSession(data.session);
+      setLoading(false);
     };
 
     fetchSession();
-    setLoading(false);
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
   }, []);
 
   return (
