@@ -16,8 +16,6 @@ const index = () => {
     return <Redirect href={"/sign-in"} />;
   }
 
-  console.log(session);
-
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
       <Link href={"/(users)"} asChild>
