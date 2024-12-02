@@ -1,7 +1,4 @@
-import { Tabs, withLayoutContext } from "expo-router";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-
-const TopTabs = withLayoutContext(createMaterialTopTabNavigator().Navigator);
+import { Tabs } from "expo-router";
 
 export default function OrderListNavigator() {
   return <Tabs />;
