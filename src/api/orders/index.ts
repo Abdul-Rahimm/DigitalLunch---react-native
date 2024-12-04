@@ -2,11 +2,16 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/providers/AuthProvider";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useFetchAdminOrderList = () => {
+export const useFetchAdminOrderList = ({ archived = false }) => {
+  const statuses = archived ? ["Delivered"] : ["New", "Cooking", "Delivering"]; //filtering orders based on their history type
+
   return useQuery({
-    queryKey: ["orders"],
+    queryKey: ["orders", { archived }],
     queryFn: async () => {
-      const { data, error } = await supabase.from("orders").select("*");
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .in("status", statuses); //delviered will be arhived
 
       if (error) throw new Error(error.message);
 

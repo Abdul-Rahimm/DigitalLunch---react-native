@@ -3,7 +3,11 @@ import OrderListItem from "@/components/OrderListItem";
 import { useFetchAdminOrderList } from "@/api/orders";
 
 export default function OrderScreen() {
-  const { data: orders, isLoading, error } = useFetchAdminOrderList();
+  const {
+    data: orders,
+    isLoading,
+    error,
+  } = useFetchAdminOrderList({ archived: false });
 
   if (isLoading) return <ActivityIndicator />;
 
