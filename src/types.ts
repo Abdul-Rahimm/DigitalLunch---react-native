@@ -14,6 +14,7 @@ type Product = Tables<"products">;
 // };
 
 export type PizzaSize = "S" | "M" | "L" | "XL";
+export type PizzaSize = "S" | "M" | "L" | "XL";
 
 export type CartItem = {
   id: string;
