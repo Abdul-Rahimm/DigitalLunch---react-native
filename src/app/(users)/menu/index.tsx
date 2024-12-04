@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useQuery } from "@tanstack/react-query";
 import { Text } from "react-native";
-import { useProductList } from "@/api/products";
+import { useFetchProductList } from "@/api/products";
 import Button from "@/components/Button";
 
 // keep structure and style seperate
 
 export default function MenuScreen() {
-  const { data: products, error, isLoading } = useProductList();
+  const { data: products, error, isLoading } = useFetchProductList();
 
   if (isLoading) return <ActivityIndicator />;
 

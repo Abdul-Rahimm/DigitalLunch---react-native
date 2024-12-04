@@ -15,14 +15,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useCart } from "@/providers/CartProvider"; //this gives you access to the addItem function
-import { useProduct } from "@/api/products";
+import { useFetchProduct } from "@/api/products";
 
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
-  const { data: product, error, isLoading } = useProduct(id);
+  const { data: product, error, isLoading } = useFetchProduct(id);
 
   const { addItem } = useCart();
   const router = useRouter();

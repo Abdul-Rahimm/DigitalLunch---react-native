@@ -5,7 +5,12 @@ import { defaultPizzaImage } from "@/components/ProductListItem";
 import Colors from "@/constants/Colors";
 import * as ImagePicker from "expo-image-picker";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useInsertProduct, useProduct, useUpdateProduct } from "@/api/products";
+import {
+  useInsertProduct,
+  useFetchProduct,
+  useUpdateProduct,
+  useDeleteProduct,
+} from "@/api/products";
 
 const CreateProductScreen = () => {
   const [name, setName] = useState("");
@@ -20,7 +25,8 @@ const CreateProductScreen = () => {
 
   const { mutate: insertProduct } = useInsertProduct();
   const { mutate: updateProduct } = useUpdateProduct();
-  const { data: updatingProduct } = useProduct(id); //fetch details of the product to be updated
+  const { data: updatingProduct } = useFetchProduct(id); //fetch details of the product to be updated
+  const { mutate: deleteProduct } = useDeleteProduct();
 
   useEffect(() => {
     if (updatingProduct) {
@@ -70,7 +76,12 @@ const CreateProductScreen = () => {
 
   //actually hits the Delete API call
   const onDelete = () => {
-    console.log("Deleting");
+    deleteProduct(id, {
+      onSuccess: () => {
+        resetFields();
+        router.replace("/(admin)/menu");
+      },
+    });
   };
 
   //confirm before hitting the APi call

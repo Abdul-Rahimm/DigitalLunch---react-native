@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useProductList = () => {
+export const useFetchProductList = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -14,7 +14,7 @@ export const useProductList = () => {
   });
 };
 
-export const useProduct = (id: number) => {
+export const useFetchProduct = (id: number) => {
   return useQuery({
     queryKey: ["products", id], //for caching
     queryFn: async () => {
@@ -76,9 +76,24 @@ export const useUpdateProduct = () => {
       return updatedProduct;
     },
 
-    async onSuccess() {
+    async onSuccess(_, { id }) {
       await queryClient.invalidateQueries(["products"]);
       await queryClient.invalidateQueries(["products", id]);
+    },
+  });
+};
+
+export const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    async mutationFn(id: number) {
+      const { error } = await supabase.from("products").delete().eq("id", id);
+
+      if (error) throw new Error(error.message);
+    },
+    async onSuccess() {
+      await queryClient.invalidateQueries(["products"]);
     },
   });
 };

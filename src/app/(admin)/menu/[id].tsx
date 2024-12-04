@@ -17,13 +17,13 @@ import { useCart } from "@/providers/CartProvider"; //this gives you access to t
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useColorScheme } from "@components/useColorScheme";
 import Colors from "@/constants/Colors";
-import { useProduct } from "@/api/products";
+import { useFetchProduct } from "@/api/products";
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
   const { id: idString } = useLocalSearchParams();
   const id = parseFloat(typeof idString === "string" ? idString : idString[0]);
-  const { data: product, error, isLoading } = useProduct(id);
+  const { data: product, error, isLoading } = useFetchProduct(id);
 
   const { addItem } = useCart();
   const colorScheme = useColorScheme();

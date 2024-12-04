@@ -6,14 +6,14 @@ import {
   View,
 } from "react-native";
 import ProductListItem from "@components/ProductListItem";
-import { useProductList } from "@/api/products";
+import { useFetchProductList } from "@/api/products";
 import Button from "@/components/Button";
 import { supabase } from "@/lib/supabase";
 
 // keep structure and style seperate
 
 export default function MenuScreen() {
-  const { data: products, error, isLoading } = useProductList();
+  const { data: products, error, isLoading } = useFetchProductList();
 
   if (isLoading) return <ActivityIndicator />;
 
