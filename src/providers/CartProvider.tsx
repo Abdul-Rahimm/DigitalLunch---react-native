@@ -1,9 +1,14 @@
+import { useInsertOrderItems } from "@/api/order-items";
 import { useInsertOrder } from "@/api/orders";
 import { CartItem, Tables } from "@/types";
 import { randomUUID } from "expo-crypto";
 import { useRouter } from "expo-router";
 import { setItem } from "expo-secure-store";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+
+/* 
+  this component is resposible for managing the cart
+*/
 type Product = Tables<"products">;
 
 type CartType = {
@@ -14,8 +19,6 @@ type CartType = {
   checkout: () => void;
 };
 
-// this component is resposible for managing the cart
-
 const CartContext = createContext<CartType>({
   items: [],
   addItem: () => {},
@@ -24,16 +27,14 @@ const CartContext = createContext<CartType>({
   checkout: () => {},
 });
 
-// function max(a: number, b: number) {
-//   if (a > b) return a;
-//   else return b;
-// }
-
 export default function CartProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const router = useRouter();
 
   const { mutate: insertOrder } = useInsertOrder();
-  const router = useRouter();
+  const { mutate: insertOrderItems } = useInsertOrderItems();
+
+  //------------------------------------------------------------------------------//
 
   const addItem = (product: Product, size: CartItem["size"]) => {
     // if already in cart, increment quantity
@@ -84,9 +85,26 @@ export default function CartProvider({ children }: PropsWithChildren) {
     insertOrder(
       { total },
       {
-        onSuccess: (data) => {
+        onSuccess: saveOrderItems, //this function gets called after the order has been successfully inserted
+      }
+    );
+  };
+
+  const saveOrderItems = (order: Tables<"orders">) => {
+    const item1 = items[0];
+    //lets see if we are able to insert one item
+
+    insertOrderItems(
+      {
+        order_id: order.id,
+        product_id: item1.product_id,
+        quantity: item1.quantity,
+        size: item1.size,
+      },
+      {
+        onSuccess() {
           clearCart();
-          router.push(`/(users)/orders/${data.id}`);
+          router.push(`/(users)/orders/${order.id}`);
         },
       }
     );
