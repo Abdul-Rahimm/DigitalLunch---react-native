@@ -1,6 +1,8 @@
 import { useInsertOrder } from "@/api/orders";
 import { CartItem, Tables } from "@/types";
 import { randomUUID } from "expo-crypto";
+import { useRouter } from "expo-router";
+import { setItem } from "expo-secure-store";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 type Product = Tables<"products">;
 
@@ -31,6 +33,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
   const [items, setItems] = useState<CartItem[]>([]);
 
   const { mutate: insertOrder } = useInsertOrder();
+  const router = useRouter();
 
   const addItem = (product: Product, size: CartItem["size"]) => {
     // if already in cart, increment quantity
@@ -72,10 +75,21 @@ export default function CartProvider({ children }: PropsWithChildren) {
     (sum, item) => (sum += item.product.price * item.quantity),
     0
   );
+  const clearCart = () => {
+    setItems([]);
+  };
 
   const checkout = () => {
     console.warn("Checkout button pressed");
-    insertOrder({ total });
+    insertOrder(
+      { total },
+      {
+        onSuccess: (data) => {
+          clearCart();
+          router.push(`/(users)/orders/${data.id}`);
+        },
+      }
+    );
   };
 
   return (
