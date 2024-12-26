@@ -10,6 +10,7 @@ import orders from "../../../../assets/data/orders";
 import OrderItemListItem from "@/components/OrderItemListItem";
 import OrderListItem from "../../../components/OrderListItem";
 import { useOrderDetails } from "@/api/orders";
+import { useUpdateOrderSubscription } from "@/api/orders/subscriptions";
 
 const OrderDetailScreen = () => {
   const { id: idString } = useLocalSearchParams();
@@ -17,6 +18,9 @@ const OrderDetailScreen = () => {
 
   // const order = orders.find((o) => o.id.toString() === id);
   const { data: order, isLoading, error } = useOrderDetails(id);
+
+  //
+  useUpdateOrderSubscription(id);
 
   if (isLoading) {
     return <ActivityIndicator />;

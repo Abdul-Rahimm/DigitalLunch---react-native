@@ -2,6 +2,7 @@ import { ActivityIndicator, FlatList, Text } from "react-native";
 import OrderListItem from "@/components/OrderListItem";
 import { useFetchAdminOrderList } from "@/api/orders";
 import { useInsertOrderSubscription } from "@/api/orders/subscriptions";
+import { supabase } from "@/lib/supabase";
 
 export default function OrderScreen() {
   const {
