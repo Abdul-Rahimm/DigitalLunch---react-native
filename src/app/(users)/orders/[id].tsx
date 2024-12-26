@@ -19,14 +19,14 @@ const OrderDetailScreen = () => {
   // const order = orders.find((o) => o.id.toString() === id);
   const { data: order, isLoading, error } = useOrderDetails(id);
 
-  //
+  //user can see the status update of his order in real time
   useUpdateOrderSubscription(id);
 
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
-  if (error) {
+  if (error || !order) {
     return <Text>Order not found!</Text>;
   }
 
