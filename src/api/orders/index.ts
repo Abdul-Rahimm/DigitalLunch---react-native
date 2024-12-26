@@ -12,7 +12,8 @@ export const useFetchAdminOrderList = ({ archived = false }) => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .in("status", statuses); //delviered will be arhived
+        .in("status", statuses) //delviered will be arhived
+        .order("created_at", { ascending: false });
 
       if (error) throw new Error(error.message);
 
@@ -33,7 +34,8 @@ export const useFetchMyOrderList = () => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .eq("user_id", userId);
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
 
       if (error) throw new Error(error.message);
 
@@ -48,7 +50,7 @@ export const useOrderDetails = (id: number) => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("orders")
-        .select("*") //, order_items(*, products(*))
+        .select("*, order_items(*, products(*))")
         .eq("id", id)
         .single();
 
