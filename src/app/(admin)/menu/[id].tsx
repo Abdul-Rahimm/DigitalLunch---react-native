@@ -18,6 +18,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useColorScheme } from "@components/useColorScheme";
 import Colors from "@/constants/Colors";
 import { useFetchProduct } from "@/api/products";
+import RemoteImage from "@/components/RemoteImage";
 const sizes: PizzaSize[] = ["S", "M", "L", "XL"];
 
 const ProductDetailsScreen = () => {
@@ -40,7 +41,7 @@ const ProductDetailsScreen = () => {
 
   if (isLoading) return <ActivityIndicator />;
 
-  if (error) return <Text>Failed to Fetch Products</Text>;
+  if (error || !product) return <Text>Failed to Fetch Products</Text>;
 
   return (
     <View style={styles.container}>
@@ -63,8 +64,9 @@ const ProductDetailsScreen = () => {
           ),
         }}
       />
-      <Image
-        source={{ uri: product.image || defaultPizzaImage }}
+      <RemoteImage
+        path={product?.image}
+        fallback={defaultPizzaImage}
         style={styles.image}
       />
 

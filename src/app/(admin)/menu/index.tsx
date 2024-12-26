@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -9,6 +10,7 @@ import ProductListItem from "@components/ProductListItem";
 import { useFetchProductList } from "@/api/products";
 import Button from "@/components/Button";
 import { supabase } from "@/lib/supabase";
+import { router } from "expo-router";
 
 // keep structure and style seperate
 
@@ -19,7 +21,7 @@ export default function MenuScreen() {
 
   if (error) return <Text>Failed to fetch Products</Text>;
   return (
-    <View>
+    <ScrollView>
       <FlatList
         data={products}
         renderItem={({ item }) => <ProductListItem product={item} />}
@@ -32,7 +34,14 @@ export default function MenuScreen() {
         columnWrapperStyle={{ gap: 10 }}
       />
       <Button text="Sign Out" onPress={() => supabase.auth.signOut()} />
-    </View>
+      <Button
+        onPress={() => {
+          console.log("Creating new product");
+          router.navigate("/(admin)/menu/create");
+        }}
+        text="Create New Product"
+      />
+    </ScrollView>
   );
 }
 
