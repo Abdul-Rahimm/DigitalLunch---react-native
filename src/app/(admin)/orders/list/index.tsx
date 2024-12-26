@@ -1,8 +1,7 @@
 import { ActivityIndicator, FlatList, Text } from "react-native";
 import OrderListItem from "@/components/OrderListItem";
 import { useFetchAdminOrderList } from "@/api/orders";
-import { useEffect } from "react";
-import { supabase } from "@/lib/supabase";
+import { useInsertOrderSubscription } from "@/api/orders/subscriptions";
 
 export default function OrderScreen() {
   const {
@@ -11,21 +10,9 @@ export default function OrderScreen() {
     error,
   } = useFetchAdminOrderList({ archived: false });
 
-  useEffect(() => {
-    const orders = supabase
-      .channel("custom-insert-channel")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "orders" },
-        (payload) => {
-          console.log("Change received!", payload);
-        }
-      )
-      .subscribe();
-  }, []);
+  useInsertOrderSubscription(); //will invalidate orders when new order appears in DB
 
   if (isLoading) return <ActivityIndicator />;
-
   if (error) return <Text>Failed to fetch admin orders all</Text>;
 
   return (
