@@ -72,6 +72,14 @@ const ProductDetailsScreen = () => {
 
       <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>PKR {product.price}</Text>
+
+      <Button
+        onPress={() => {
+          console.log("editing product");
+          router.navigate(`/(admin)/menu/create?id=${id}`);
+        }}
+        text="Edit Product"
+      />
     </View>
   );
 };
