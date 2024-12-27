@@ -18,6 +18,8 @@ const index = () => {
 
   if (!isAdmin) {
     return <Redirect href={"/(users)"} />;
+  } else {
+    return <Redirect href={"/(admin)"} />;
   }
 
   return (
