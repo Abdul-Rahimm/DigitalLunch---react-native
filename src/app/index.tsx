@@ -4,9 +4,24 @@ import Button from "../components/Button";
 import { Link, Redirect, router } from "expo-router";
 import { useAuth } from "@/providers/AuthProvider";
 import { supabase } from "@/lib/supabase";
+import SplashScreen from "./SplashScreen";
+import { useState } from "react";
+
+export const options = {
+  headerShown: false,
+};
 
 const index = () => {
   const { session, loading } = useAuth();
+  const [showSplash, setShowSplash] = useState<boolean>(true);
+
+  const handleSplashFinish = () => {
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onFinish={handleSplashFinish} />;
+  }
   if (loading) {
     return <ActivityIndicator />;
   }
